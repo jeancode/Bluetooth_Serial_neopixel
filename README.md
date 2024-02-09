@@ -24,7 +24,7 @@ Antes de cargar el código en su ESP32, asegúrese de tener instaladas las bibli
 
 El código proporcionado es una combinación de la configuración del ESP32, la comunicación Bluetooth y el control de las luces NeoPixel. El ESP32 está configurado para comunicarse tanto a través del puerto serial estándar como a través de Bluetooth. Cuando recibe datos a través de Bluetooth, el ESP32 interpreta los valores de rojo (R), verde (G) y azul (B) y los utiliza para configurar el color de las luces NeoPixel.
 ### Paso 1
-```
+``` C++
 // Incluir bibliotecas
 #include <BluetoothSerial.h>
 #include <Adafruit_NeoPixel.h>
@@ -38,7 +38,7 @@ BluetoothSerial SerialBT;
 Adafruit_NeoPixel pixels(NUMPIXELS, PIN, NEO_GRB + NEO_KHZ800);
 ```
 ### Paso 2
-```
+``` C++
 // Función para extraer valores RGB de una cadena de entrada
 void extraerRGB(const char* inputString, void (*callback)(int, int, int)) {
   // Buscar índices de las letras r, g, b
@@ -56,8 +56,7 @@ int indexOf(const char* str, const char* subStr) {
 }
 ```
 ### Paso 3
-
-```
+``` C++
 // Configuración inicial
 void setup() {
   Serial.begin(115200);
@@ -66,8 +65,7 @@ void setup() {
 }
 ```
 ### Paso 4
-
-```
+``` C++
 // Bucle principal
 void loop() {
   if (Serial.available()) {
