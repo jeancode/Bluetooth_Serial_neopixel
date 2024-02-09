@@ -23,7 +23,62 @@ Antes de cargar el código en su ESP32, asegúrese de tener instaladas las bibli
 ### Código
 
 El código proporcionado es una combinación de la configuración del ESP32, la comunicación Bluetooth y el control de las luces NeoPixel. El ESP32 está configurado para comunicarse tanto a través del puerto serial estándar como a través de Bluetooth. Cuando recibe datos a través de Bluetooth, el ESP32 interpreta los valores de rojo (R), verde (G) y azul (B) y los utiliza para configurar el color de las luces NeoPixel.
+### Paso 1
+```
+// Incluir bibliotecas
+#include <BluetoothSerial.h>
+#include <Adafruit_NeoPixel.h>
 
+// Definir pin y número de píxeles
+#define PIN  15    
+#define NUMPIXELS 16
+
+// Inicializar objetos
+BluetoothSerial SerialBT;
+Adafruit_NeoPixel pixels(NUMPIXELS, PIN, NEO_GRB + NEO_KHZ800);
+```
+### Paso 2
+```
+// Función para extraer valores RGB de una cadena de entrada
+void extraerRGB(const char* inputString, void (*callback)(int, int, int)) {
+  // Buscar índices de las letras r, g, b
+  int indiceR = indexOf(inputString, "r:");
+  int indiceG = indexOf(inputString, "g:");
+  int indiceB = indexOf(inputString, "b:");
+  
+  // ...
+}
+
+// Función para buscar la posición de una subcadena en un string
+int indexOf(const char* str, const char* subStr) {
+  const char* ptr = strstr(str, subStr);
+  return ptr != NULL ? ptr - str : -1;
+}
+```
+### Paso 3
+
+```
+// Configuración inicial
+void setup() {
+  Serial.begin(115200);
+  SerialBT.begin("ESP32SerialBT"); // El nombre del dispositivo Bluetooth
+  pixels.begin();
+}
+```
+### Paso 4
+
+```
+// Bucle principal
+void loop() {
+  if (Serial.available()) {
+    // ...
+  }
+
+  if (SerialBT.available()) {
+    // ...
+  }
+}
+```
 ### Uso
 
 Una vez que haya cargado el código en su ESP32 y haya conectado la tira de luces NeoPixel, puede emparejar su dispositivo Bluetooth con el ESP32. Una vez emparejado, puede enviar comandos de texto con los valores de R, G y B separados por comas a través de una aplicación de terminal serial o cualquier otra aplicación compatible con Bluetooth. El ESP32 interpretará estos comandos y ajustará el color de las luces NeoPixel en consecuencia.
